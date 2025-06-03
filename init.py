@@ -1,15 +1,20 @@
 from flask import Flask
 from Database import db
 from flask_cors import CORS
+import os
 from mods.events.Events import events
 from mods.audit.audit import audit
 from mods.user.user import user
 from  mods.admin.admin import admin
+
+ASP = os.environ.get('AivenSP')
+DB = os.environ.get('DB')
+DBNAME = os.environ.get('DBNAME')
 def create_app():
     app = Flask(__name__)
     CORS(app)
     app.config[
-        'SQLALCHEMY_DATABASE_URI'] = 'postgresql://avnadmin:AVNS_MIKKB3uW8D-7ngBOEyM@bndatabase-bookn3rd2.j.aivencloud.com:13150/Booknerds?sslmode=require'
+        'SQLALCHEMY_DATABASE_URI'] = (f'postgresql://avnadmin:{ASP}@{DB}/{DBN}?sslmode=require')
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
