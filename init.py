@@ -9,7 +9,7 @@ from  mods.admin.admin import admin
 
 ASP = os.environ.get('AivenSP')
 DB = os.environ.get('DB')
-DBNAME = os.environ.get('DBNAME')
+DBN = os.environ.get('DBN')
 def create_app():
     app = Flask(__name__)
     CORS(app)
