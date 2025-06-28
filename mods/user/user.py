@@ -7,6 +7,7 @@ from Database import users, db
 user = Blueprint('user', __name__)
 CORS(user)
 
+
 @user.before_request
 def apiKeyChecker():
     if request.method == 'OPTIONS':
@@ -15,7 +16,7 @@ def apiKeyChecker():
 
     api_key = request.headers.get('x-api-key')
     if api_key != os.environ.get('application_key'):
-        return jsonify({'message':'forbidden'}), 403
+        return jsonify({'message': 'forbidden'}), 403
 
 
 @user.route('/login/creds', methods=['POST'])
@@ -32,7 +33,8 @@ def login():
         else:
             if argon2.verify(password, cred.password_hash):
                 # print({"name": cred.name, "email": cred.email, 'image': cred.image})
-                return jsonify({'user' : {"name": cred.name, "email": cred.email, 'image': cred.image, 'code': cred.code}}), 200
+                return jsonify(
+                    {'user': {"name": cred.name, "email": cred.email, 'image': cred.image, 'code': cred.code}}), 200
             else:
                 return jsonify({'message': "something went wrong"}), 400
 
@@ -47,7 +49,7 @@ def create_account():
         email = data.get('email')
         name = data.get('name')
         password = data.get('password')
-        password_hash =argon2.hash(password)
+        password_hash = argon2.hash(password)
         Image = data.get('image')
         new_user = users(
             email=email,
@@ -63,5 +65,3 @@ def create_account():
     except Exception as e:
         print(f"Error storing data: {e}")
         return jsonify({"error": "Failed to store data"}), 500
-
-

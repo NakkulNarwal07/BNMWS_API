@@ -13,8 +13,7 @@ DBN = os.environ.get('DBN')
 def create_app():
     app = Flask(__name__)
     CORS(app)
-    app.config[
-        'SQLALCHEMY_DATABASE_URI'] = (f'postgresql://avnadmin:{ASP}@{DB}/{DBN}?sslmode=require')
+    app.config['SQLALCHEMY_DATABASE_URI'] = (f'postgresql://avnadmin:{ASP}@{DB}/{DBN}?sslmode=require')
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
@@ -28,4 +27,4 @@ def create_app():
 
 app = create_app()
 if __name__ == '__main__':
-    app.run(port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8080)
